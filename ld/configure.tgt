@@ -43,12 +43,12 @@ targ64_extra_libpath=
 # Please try to keep this table more or less in alphabetic order - it
 # makes it much easier to lookup a specific archictecture.
 case "${targ}" in
-i[3-7]86-*-astraea*)
-			targ_emul=elf_i386_astraea
-			targ_extra_emuls="elf_x86_64_astraea elf_x86_64"
+i[3-7]86-*-astraeaos*)
+			targ_emul=elf_i386_astraeaos
+			targ_extra_emuls="elf_x86_64_astraeaos elf_x86_64"
 			;;
-x86_64-*-astraea*)	targ_emul=elf_x86_64
-			targ_extra_emuls="elf_i386_astraea elf_x86_64 elf_i386"
+x86_64-*-astraeaos*)	targ_emul=elf_x86_64
+			targ_extra_emuls="elf_i386_astraeaos elf_x86_64 elf_i386"
 			;;
 aarch64_be-*-elf)	targ_emul=aarch64elfb
 			targ_extra_emuls="aarch64elf aarch64elf32 aarch64elf32b armelfb armelf"
@@ -1040,7 +1040,10 @@ esac
 
 NATIVE_LIB_DIRS='/usr/local/lib /lib /usr/lib'
 case "${target}" in
-
+*-*-astraeaos*)
+  NATIVE_LIB_DIRS='/lib /local/lib /usr/lib /usr/local/lib'
+  ;;
+  
 *-*-dragonfly*)
   NATIVE_LIB_DIRS='/lib /usr/lib /usr/pkg/lib /usr/local/lib'
   ;;
