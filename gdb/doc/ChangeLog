@@ -1,3 +1,42 @@
+2021-06-08  Lancelot Six  <lsix@lancelotsix.com>
+
+	* python.texi (Writing a Pretty-Printer): Use 'is None' instead of
+	'== None'.
+
+2021-06-05  Shahab Vahedi  <shahab@synopsys.com>
+
+	* gdb.texinfo (Source and Machine Code): Document 'set
+	disassembler-options' support for the ARC target.
+
+2021-06-04  Hannes Domani  <ssbssa@yahoo.de>
+
+	* python.texi (TUI Windows In Python): Document Window.click.
+
+2021-05-29  Hannes Domani  <ssbssa@yahoo.de>
+
+	* python.texi (Writing a Frame Filter): Fix example.
+
+2021-05-27  Hannes Domani  <ssbssa@yahoo.de>
+
+	* python.texi (TUI Windows In Python): Document "full_window"
+	argument.
+
+2021-05-27  Hannes Domani  <ssbssa@yahoo.de>
+
+	* python.texi (Symbols In Python): Document gdb.SYMBOL_LOC_LABEL.
+
+2021-05-25  Hannes Domani  <ssbssa@yahoo.de>
+
+	* python.texi (Symbols In Python): Fix gdb.SYMBOL_LOC_COMMON_BLOCK.
+
+2021-05-24  Andrew Burgess  <andrew.burgess@embecosm.com>
+
+	* gdb.texi (Initialization Files): Add '@:' after 'e.g.'.
+	(Source Path): Likewise.
+	(GDB/MI Development and Front Ends): Likewise.
+	(ARM Features): Likewise.
+	(gdb man): Likewise.
+
 2021-05-14  Tankut Baris Aktemur  <tankut.baris.aktemur@intel.com>
 
 	* python.texi (Inferiors In Python): Mention the 'connection_num'

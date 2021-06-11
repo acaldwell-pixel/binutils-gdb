@@ -1,3 +1,477 @@
+2021-06-10  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* lib/gdb.exp (default_gdb_exit): Unset gdb_tty_name.
+	(spawn_capture_tty_name): New, override builtin spawn.
+	(default_gdb_spawn): Capture GDB's TTY name.
+	* lib/tuiterm.exp (tuiterm_spawn): Remove.
+	(tuiterm_env_init, tuiterm_env_finish): Remove spawn override.
+	(Term) <resize>: Use new variable name.
+	(tuiterm_env_init, tuiterm_env_finish): Remove.
+	(tuiterm_env): Don't call tuiterm_env_init and register
+	tuiterm_env_finish in gdb_finish_hooks.
+	(gdb_finish_hooks): Remove.
+	(gdb_finish): Don't call finish hooks.
+
+2021-06-08  Lancelot Six  <lsix@lancelotsix.com>
+
+	* python/lib/gdb/FrameDecorator.py (FrameDecorator): Use 'is None'
+	instead of '== None'.
+	(FrameVars): Use 'is not None' instead of '!= None'.
+	* python/lib/gdb/command/frame_filters.py (SetFrameFilterPriority):
+	Use 'is None' instead of '== None' and 'is not None' instead of '!=
+	None'.
+
+2021-06-08  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* inferior.h (class inferior) <in_initial_library_scan>: New.
+	* infcmd.c (post_create_inferior): Set in_initial_library_scan.
+	* infrun.c (follow_fork_inferior): Likewise.
+	* linux-thread-db.c (try_thread_db_load): Catch exception thrown
+	by try_thread_db_load_1
+	(thread_db_load): Return early if in_initial_library_scan is
+	set.
+	* remote.c (remote_new_objfile): Return early if
+	in_initial_library_scan is set.
+
+2021-06-07  Pedro Alves  <pedro@palves.net>
+
+	* dwarf2/read.c (struct partial_die_info): Add defaulted copy
+	ctor.
+	* symtab.h (struct symbol): Add defaulted copy assignment
+	operator.
+
+2021-06-07  Pedro Alves  <pedro@palves.net>
+
+	* completer.c (RL_QF_SINGLE_QUOTE, RL_QF_DOUBLE_QUOTE)
+	(RL_QF_BACKSLASH, RL_QF_OTHER_QUOTE): Delete.
+	(gdb_rl_find_completion_word): Remove write-only 'found_quote'
+	local.
+
+2021-06-07  Pedro Alves  <pedro@palves.net>
+
+	* nat/amd64-linux-siginfo.c (union nat_sigval): Rename to ...
+	(nat_sigval_t): ... this and remove typedef of same name.
+	(struct nat_siginfo): Rename to ...
+	(nat_siginfo_t): ... this and remove typedef of same name.
+	(struct compat_sigval): Rename to ...
+	(compat_sigval_t): ... this and remove typedef of same name.
+	(struct compat_siginfo): Rename to ...
+	(compat_siginfo_t): ... this and remove typedef of same name.
+	(struct compat_x32_siginfo): Rename to ...
+	(compat_x32_siginfo_t): ... this and remove typedef of same name.
+	(amd64_linux_siginfo_fixup_common): Adjust.
+
+2021-06-07  Pedro Alves  <pedro@palves.net>
+
+	* nat/amd64-linux-siginfo.c (compat_x32_siginfo_t): Move
+	__attribute__ __aligned__ from the typedef to the struct.
+
+2021-06-07  Andrew Burgess  <andrew.burgess@embecosm.com>
+
+	PR gdb/27847
+	* amd64-tdep.c (amd64_has_unaligned_fields): Move call to
+	type_align, and spot case where the alignment is unknown.
+
+2021-06-07  Carl Love  <cel@us.ibm.com>
+
+	* ppc-tdep.h (ppc_insn_prefix_dform): Declare.
+	* ppc64-tdep.c(insn_md, insn_x, insn_xo): New macros.
+	(ppc64_plt_pcrel_entry_point, ppc64_pcrel_linkage1_target,
+	ppc64_pcrel_linkage2_target): New functions.
+	(ppc64_standard_linkage9, ppc64_standard_linkage10,
+	ppc64_standard_linkage11, ppc64_standard_linkage12): New ppc
+	instruction patterns.
+	(ppc64_standard_linkage9, ppc64_standard_linkage10,
+	ppc64_standard_linkage11, ppc64_standard_linkage12): New variables
+	in define MAX expression.
+	(ppc64_skip_trampoline_code_1): Handle ppc64_standard_linkage9,
+	ppc64_standard_linkage10, ppc64_standard_linkage11,
+	ppc64_standard_linkage12.
+	* (ppc_insn_prefix_dform): New function.
+
+2021-06-07  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	PR gdb/27899
+	* sparc-nat.c (sparc_fetch_inferior_registers): Set
+	inferior_ptid instead of using switch_to_thread.
+	(sparc_store_inferior_registers): Likewise.
+
+2021-06-05  Bernd Edlinger  <bernd.edlinger@hotmail.de>
+
+	* compile/compile.c (scoped_ignore_sigpipe): New helper class.
+	(compile_to_object): Ignore SIGPIPE before calling the plugin.
+
+2021-06-05  Tom Tromey  <tom@tromey.com>
+
+	* data-directory/Makefile.in (Makefile): Use correct directory
+	name.
+
+2021-06-05  Tom Tromey  <tom@tromey.com>
+
+	* data-directory/Makefile.in (Makefile): Rewrite.
+
+2021-06-05  Tom Tromey  <tromey@adacore.com>
+
+	* configure: Rebuild.
+	* configure.ac: Add ACX_NONCANONICAL_TARGET.
+
+2021-06-05  Shahab Vahedi  <shahab@synopsys.com>
+
+	* NEWS: Document 'set disassembler-options' support for the ARC
+	target.
+	* arc-tdep.c (arc_gdbarch_init): Set
+	'gdbarch_valid_disassembler_options'.
+
+2021-06-04  Tom Tromey  <tromey@adacore.com>
+
+	* dwarf2/read.h (dwarf2_fetch_die_type_sect_off): Add 'var_name'
+	parameter.
+	* dwarf2/loc.c (dwarf2_evaluate_property) <case
+	PROP_VARIABLE_NAME>: New case.
+	(compute_var_value): New function.
+	(sect_variable_value): Use compute_var_value.
+	* dwarf2/read.c (attr_to_dynamic_prop): Handle DW_TAG_variable.
+	(var_decl_name): New function.
+	(dwarf2_fetch_die_type_sect_off): Add 'var_name' parameter.
+	* gdbtypes.h (enum dynamic_prop_kind) <PROP_VARIABLE_NAME>: New
+	constant.
+	(union dynamic_prop_data) <variable_name>: New member.
+	(struct dynamic_prop) <variable_name, set_variable_name>: New
+	methods.
+
+2021-06-04  Andrew Burgess  <andrew.burgess@embecosm.com>
+
+	* remote.c (remote_target)
+	<select_thread_for_ambiguous_stop_reply>: Add additional debug
+	output.
+
+2021-06-04  Hannes Domani  <ssbssa@yahoo.de>
+
+	* python/py-tui.c (class tui_py_window): Add click function.
+	(tui_py_window::click): Likewise.
+
+2021-06-04  Hannes Domani  <ssbssa@yahoo.de>
+
+	* ser-mingw.c (console_select_thread): Handle MOUSE_EVENT.
+	* tui/tui-data.h (struct tui_win_info): Add click function.
+	* tui/tui-io.c (tui_prep_terminal): Enable mouse events.
+	(tui_deprep_terminal): Disable mouse events.
+	(tui_dispatch_ctrl_char): Handle KEY_MOUSE.
+	* tui/tui.c (tui_disable): Disable mouse events.
+
+2021-06-03  Magne Hov  <mhov@undo.io>
+
+	PR python/27841
+	* eval.c (expression::evaluate): Check inferior_ptid.
+
+2021-06-03  Pedro Alves  <pedro@palves.net>
+
+	* MAINTAINERS (The Official FSF-appointed GDB Maintainers): Remove
+	affiliation.
+	(Global Maintainers): Update my address.
+	(Write After Approval): Remove stale entry.
+
+2021-06-03  John Baldwin  <jhb@FreeBSD.org>
+
+	* fbsd-tdep.c (FBSD_SI_USER, FBSD_SI_QUEUE, FBSD_SI_TIMER)
+	(FBSD_SI_ASYNCIO, FBSD_SI_MESGQ, FBSD_SI_KERNEL, FBSD_SI_LWP)
+	(FBSD_ILL_ILLOPC, FBSD_ILL_ILLOPN, FBSD_ILL_ILLADR)
+	(FBSD_ILL_ILLTRP, FBSD_ILL_PRVOPC, FBSD_ILL_PRVREG)
+	(FBSD_ILL_COPROC, FBSD_ILL_BADSTK, FBSD_BUS_ADRALN)
+	(FBSD_BUS_ADRERR, FBSD_BUS_OBJERR, FBSD_BUS_OOMERR)
+	(FBSD_SEGV_MAPERR, FBSD_SEGV_ACCERR, FBSD_SEGV_PKUERR)
+	(FBSD_FPE_INTOVF, FBSD_FPE_INTDIV, FBSD_FPE_FLTDIV)
+	(FBSD_FPE_FLTOVF, FBSD_FPE_FLTUND, FBSD_FPE_FLTRES)
+	(FBSD_FPE_FLTINV, FBSD_FPE_FLTSUB, FBSD_TRAP_BRKPT)
+	(FBSD_TRAP_TRACE, FBSD_TRAP_DTRACE, FBSD_TRAP_CAP)
+	(FBSD_CLD_EXITED, FBSD_CLD_KILLED, FBSD_CLD_DUMPED)
+	(FBSD_CLD_TRAPPED, FBSD_CLD_STOPPED, FBSD_CLD_CONTINUED)
+	(FBSD_POLL_IN, FBSD_POLL_OUT, FBSD_POLL_MSG, FBSD_POLL_ERR)
+	(FBSD_POLL_PRI, FBSD_POLL_HUP, fbsd_signal_cause)
+	(fbsd_report_signal_info): New.
+	(fbsd_init_abi): Use fbsd_report_signal_info as gdbarch
+	report_signal_info method.
+
+2021-06-03  Magne Hov  <mhov@undo.io>
+
+	* MAINTAINERS (Write After Approval): Add Magne Hov.
+
+2021-06-03  Hannes Domani  <ssbssa@yahoo.de>
+
+	* python/py-symbol.c (gdbpy_initialize_symbols): Restore
+	gdb.SYMBOL_LABEL_DOMAIN constant.
+
+2021-06-01  John Baldwin  <jhb@FreeBSD.org>
+
+	* infrun.c (handle_inferior_event): Only call
+	gdbarch_displaced_step_restore_all_in_ptid if
+	gdbarch_supports_displaced_stepping is true.
+
+2021-06-01  Tom Tromey  <tromey@adacore.com>
+
+	* Makefile.in (all-data-directory): Remove.
+	(data-directory/Makefile): Remove.
+
+2021-06-01  Tom Tromey  <tromey@adacore.com>
+
+	* configure: Rebuild.
+	* configure.ac: Use AS_HELP_STRING for enable-shared.  Fix typo.
+
+2021-06-01  Tom Tromey  <tromey@adacore.com>
+
+	* silent-rules.mk (ECHO_CC): New variable.
+
+2021-06-01  Tom Tromey  <tromey@adacore.com>
+
+	* Makefile.in (SUBDIRS): Add testsuite.
+	(all): Don't exclude testsuite.
+
+2021-06-01  Tom Tromey  <tromey@adacore.com>
+
+	* configure.ac: Copy some code from testsuite/configure.ac.
+	(enable_libctf): Subst this, not ENABLE_LIBCTF.
+	* configure: Rebuild.
+
+2021-06-01  Tom de Vries  <tdevries@suse.de>
+
+	PR symtab/26096
+	* minsyms.c (msymbol_is_cold_clone): New function.
+	(msymbol_is_function): Use msymbol_is_cold_clone.
+
+2021-06-01  Fredrik Hederstierna  <fredrik@hederstierna.com>
+	    Andrew Burgess  <andrew.burgess@embecosm.com>
+
+	PR gdb/14383
+	* Makefile.in (ALL_TARGET_OBS): Add arm-none-tdep.o.
+	(ALLDEPFILES): Add arm-none-tdep.c
+	* arm-none-tdep.c: New file.
+	* configure.tgt (arm*-*-*): Add arm-none-tdep.o to cpu_obs.
+
+2021-06-01  Andrew Burgess  <andrew.burgess@embecosm.com>
+	    Richard Bunt  <richard.bunt@arm.com>
+
+	* breakpoint.c (check_longjmp_breakpoint_for_call_dummy): Add
+	check for why the backtrace stopped.
+
+2021-05-31  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* dwarf2/read.h (struct structured_type) <signatured_type>: New.
+	Update all callers.
+	(struct dwarf2_per_bfd) <allocate_signatured_type>: Add
+	signature parameter, update all callers.
+	* dwar2/read.c (dwarf2_per_bfd::allocate_signatured_type): Add
+	signature parameter.
+
+2021-05-31  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* dwarf2/read.h (signatured_type_up): New, use where possible.
+
+2021-05-31  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* dwarf2/read.h (signatured_type, dwarf2_per_cu_data): Move up.
+
+2021-05-30  Tom Tromey  <tom@tromey.com>
+
+	* dwarf2/read.c (dwarf2_per_bfd::allocate_signatured_type): Set
+	is_debug_types.
+	(create_signatured_type_table_from_index)
+	(create_signatured_type_table_from_debug_names, add_type_unit)
+	(read_comp_units_from_section): Update.
+
+2021-05-30  Tom Tromey  <tom@tromey.com>
+
+	* dwarf2/read.h (struct dwarf2_per_bfd) <num_psymtabs,
+	m_num_psymtabs>: Remove.
+	(resize_symtabs): Update.
+	* dwarf2/read.c (dwarf2_per_bfd::allocate_per_cu)
+	(dwarf2_per_bfd::allocate_signatured_type): Update.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* Fix tab after space indentation issues throughout.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* Fix some indentation mistakes throughout.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* breakpoint.h (iterate_over_bp_locations): Remove.  Update
+	users to use all_bp_locations.
+	(all_bp_locations): New.
+	* breakpoint.c (all_bp_locations): Make non-static.
+	(iterate_over_bp_locations): Remove.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* breakpoint.h (iterate_over_breakpoints): Remove.  Update
+	callers to use all_breakpoints or all_breakpoints_safe.
+	(breakpoint_range, all_breakpoints, breakpoint_safe_range,
+	all_breakpoints_safe): Move here.
+	* breakpoint.c (all_breakpoints, all_breakpoints_safe): Make
+	non-static.
+	(iterate_over_breakpoints): Remove.
+	* python/py-finishbreakpoint.c (bpfinishpy_detect_out_scope_cb):
+	Return void.
+	* python/py-breakpoint.c (build_bp_list): Add comment, reverse
+	return value logic.
+	* guile/scm-breakpoint.c (bpscm_build_bp_list): Return void.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* breakpoint.c (get_first_locp_gte_addr): Remove.
+	(ALL_BP_LOCATIONS_AT_ADDR): Remove.  Replace all uses with
+	all_bp_locations_at_addr.
+	(struct bp_locations_at_addr_range): New.
+	(all_bp_locations_at_addr): New.
+	(bp_locations_compare_addrs): New.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* breakpoint.c (ALL_BP_LOCATIONS): Remove, update users to use
+	all_bp_locations.
+	(all_bp_locations): New.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* breakpoint.c (bp_locations): Change to std::vector, update all
+	users.
+	(bp_locations_count): Remove.
+	(update_global_location_list): Change to work with indices
+	rather than bp_location**.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* breakpoint.h (bp_locations_range): New.
+	(struct breakpoint) <locations>: New.  Use where possible.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* breakpoint.h (all_tracepoints): Remove.
+	(breakpoint_iterator): Move here.
+	(struct tracepoint_filter): New.
+	(tracepoint_iterator): New.
+	(tracepoint_range): New.
+	(all_tracepoints): New.
+	* breakpoint.c (ALL_TRACEPOINTS): Remove, replace all users with
+	all_tracepoints.
+	(breakpoint_iterator): Move to header.
+	(all_tracepoints): New.
+	* tracepoint.c (start_tracing): Adjust.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* breakpoint.c (breakpoint_safe_range): New.
+	(all_breakpoints_safe): New.  Use instead of
+	ALL_BREAKPOINTS_SAFE where possible.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* breakpoint.c (ALL_BREAKPOINTS): Remove, replace all uses with
+	all_breakpoints.
+	(breakpoint_iterator): New.
+	(breakpoint_range): New.
+	(all_breakpoints): New.
+
+2021-05-27  Hannes Domani  <ssbssa@yahoo.de>
+
+	* python/py-tui.c (tui_py_window::output): Add full_window
+	argument.
+	(gdbpy_tui_write): Parse "full_window" argument.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* make-init-c: Add option to reverse function calls.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* Makefile.in (INIT_FILES_FILTER_OUT): New.
+	(INIT_FILES): Use INIT_FILES_FILTER_OUT.
+	(stamp-init): Use make-init-c.
+	* bpf-tdep.c (_initialize_bpf_tdep): Remove "void".
+	* silent-rules.mk (ECHO_INIT_C): Change.
+	* make-init-c: New file.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* command.h (add_alias_cmd): Accept target as
+	cmd_list_element.  Update callers.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* command.h (add_info_alias): Accept target as
+	cmd_list_element.  Update callers.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* command.h (add_com_alias): Accept target as
+	cmd_list_element.  Update callers.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* python/py-param.c (add_setshow_generic): Use return values of
+	add_setshow functions.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* mi/mi-main.c (_initialize_mi_main):
+	* python/py-auto-load.c (gdbpy_initialize_auto_load):
+	* remote.c (_initialize_remote):
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* command.h (set_show_commands): New.
+	(add_setshow_enum_cmd, add_setshow_auto_boolean_cmd,
+	add_setshow_boolean_cmd, add_setshow_filename_cmd,
+	add_setshow_string_cmd, add_setshow_string_noescape_cmd,
+	add_setshow_optional_filename_cmd, add_setshow_integer_cmd,
+	add_setshow_uinteger_cmd, add_setshow_zinteger_cmd,
+	add_setshow_zuinteger_cmd, add_setshow_zuinteger_unlimited_cmd):
+	Return set_show_commands.  Adjust callers.
+	* cli/cli-decode.c (add_setshow_cmd_full): Return
+	set_show_commands, remove result parameters, adjust callers.
+
+2021-05-27  Tom de Vries  <tdevries@suse.de>
+
+	PR symtab/27919
+	* dwarf2/read.c (process_psymtab_comp_unit):
+
+2021-05-27  Tom de Vries  <tdevries@suse.de>
+
+	* dwarf2/read.c (find_partial_die): Fix "Cannot not" typo in dwarf
+	error.
+
+2021-05-27  Tom de Vries  <tdevries@suse.de>
+
+	PR symtab/27898
+	* dwarf2/cu.c (dwarf2_cu::dwarf2_cu): Add load_all_dies init.
+	* dwarf2/cu.h (dwarf2_cu): Add load_all_dies field.
+	* dwarf2/read.c (load_partial_dies, find_partial_die): Update.
+	* dwarf2/read.h (dwarf2_per_cu_data::dwarf2_per_cu_data): Remove
+	load_all_dies init.
+	(dwarf2_per_cu_data): Remove load_all_dies field.
+
+2021-05-26  Simon Marchi  <simon.marchi@efficios.com>
+
+	* regcache.c (reg_buffer::reg_buffer): Default-initialize
+	m_registers array.
+
+2021-05-26  Tom Tromey  <tom@tromey.com>
+
+	* dwarf2/read.c (allocate_type_unit_groups_table)
+	(handle_DW_AT_stmt_list, allocate_dwo_file_hash_table): Use
+	htab_delete_entry.
+	(free_line_header_voidp): Remove.
+	* completer.c
+	(completion_tracker::completion_hash_entry::deleter): Remove.
+	(completion_tracker::discard_completions): Use htab_delete_entry.
+	* utils.h (htab_delete_entry): New template function.
+
+2021-05-24  Hannes Domani  <ssbssa@yahoo.de>
+
+	* python/py-tui.c (tui_py_window::refresh_window):
+	Avoid flickering.
+
 2021-05-23  Tom de Vries  <tdevries@suse.de>
 
 	PR tdep/27822

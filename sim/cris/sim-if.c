@@ -879,7 +879,7 @@ sim_open (SIM_OPEN_KIND kind, host_callback *callback, struct bfd *abfd,
 
   /* Allocate core managed memory if none specified by user.  */
   if (sim_core_read_buffer (sd, NULL, read_map, &c, startmem, 1) == 0)
-    sim_do_commandf (sd, "memory region 0x%" PRIx32 "x,0x%" PRIu32 "x",
+    sim_do_commandf (sd, "memory region 0x%" PRIx32 ",0x%" PRIu32,
 		     startmem, endmem - startmem);
 
   /* Allocate simulator I/O managed memory if none specified by user.  */
@@ -939,10 +939,6 @@ sim_open (SIM_OPEN_KIND kind, host_callback *callback, struct bfd *abfd,
     sim_profile_set_option (sd, "-model", PROFILE_MODEL_IDX, "on");
 #endif
   }
-
-  /* Initialize various cgen things not done by common framework.
-     Must be done after cris_cgen_cpu_open.  */
-  cgen_init (sd);
 
   cris_set_callbacks (callback);
 

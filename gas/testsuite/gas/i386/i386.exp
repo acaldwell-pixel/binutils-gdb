@@ -69,6 +69,7 @@ if [gas_32_check] then {
     run_dump_test "prefix"
     run_list_test "prefix32" "-al"
     run_dump_test "lea"
+    run_dump_test "lea16"
     run_dump_test "amd"
     run_dump_test "katmai"
     run_dump_test "jump"
@@ -96,6 +97,8 @@ if [gas_32_check] then {
     run_dump_test "equ"
     run_list_test "equ-bad"
     run_dump_test "divide"
+    run_dump_test "quoted"
+    run_dump_test "unary"
     run_dump_test "padlock"
     run_dump_test "crx"
     run_list_test "cr-err" ""
@@ -148,6 +151,8 @@ if [gas_32_check] then {
     run_dump_test "addr32"
     run_dump_test "code16"
     run_list_test "oversized16" "-al"
+    run_dump_test "wrap32-text"
+    run_dump_test "wrap32-data"
     run_dump_test "sse4_1"
     run_dump_test "sse4_1-intel"
     run_dump_test "sse4_2"
@@ -539,6 +544,7 @@ if [gas_32_check] then {
     run_list_test "optimize-7" "-I${srcdir}/$subdir -march=+noavx2 -al"
     run_dump_test "lea-optimize"
     run_dump_test "lea16-optimize"
+    run_dump_test "lea16-optimize2"
     run_dump_test "align-branch-1a"
     run_dump_test "align-branch-1b"
     run_dump_test "align-branch-1c"
@@ -734,6 +740,7 @@ if {[is_elf_format] || [istarget "*-*-vxworks*"]} then {
     run_dump_test "property-ldmxcsr"
     run_dump_test "property-vldmxcsr"
     run_dump_test "property-vzeroall"
+    run_dump_test "code16-2"
 
     if {![istarget "*-*-dragonfly*"]
 	&& ![istarget "*-*-gnu*"]
@@ -1298,6 +1305,7 @@ if [gas_64_check] then {
 	run_dump_test "x86-64-property-8"
 	run_dump_test "x86-64-property-9"
 	run_dump_test "x86-64-property-14"
+	run_dump_test "x86-64-code16-2"
 
 	if {[istarget "*-*-linux*"]} then {
 	    run_dump_test "x86-64-align-branch-3"

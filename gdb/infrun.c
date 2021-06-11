@@ -521,6 +521,9 @@ holding the child stopped.  Try \"set detach-on-fork\" or \
 		 breakpoint.  If a "cloned-VM" event was propagated
 		 better throughout the core, this wouldn't be
 		 required.  */
+	      scoped_restore restore_in_initial_library_scan
+		= make_scoped_restore (&child_inf->in_initial_library_scan,
+				       true);
 	      solib_create_inferior_hook (0);
 	    }
 	}
@@ -656,6 +659,8 @@ holding the child stopped.  Try \"set detach-on-fork\" or \
 	     shared libraries, and install the solib event breakpoint.
 	     If a "cloned-VM" event was propagated better throughout
 	     the core, this wouldn't be required.  */
+	  scoped_restore restore_in_initial_library_scan
+	    = make_scoped_restore (&child_inf->in_initial_library_scan, true);
 	  solib_create_inferior_hook (0);
 	}
 
@@ -5493,10 +5498,18 @@ handle_inferior_event (struct execution_control_state *ecs)
 	struct gdbarch *gdbarch = regcache->arch ();
 	inferior *parent_inf = find_inferior_ptid (ecs->target, ecs->ptid);
 
-	/* If this is a fork (child gets its own address space copy) and some
-	   displaced step buffers were in use at the time of the fork, restore
-	   the displaced step buffer bytes in the child process.  */
-	if (ecs->ws.kind == TARGET_WAITKIND_FORKED)
+	/* If this is a fork (child gets its own address space copy)
+	   and some displaced step buffers were in use at the time of
+	   the fork, restore the displaced step buffer bytes in the
+	   child process.
+
+	   Architectures which support displaced stepping and fork
+	   events must supply an implementation of
+	   gdbarch_displaced_step_restore_all_in_ptid.  This is not
+	   enforced during gdbarch validation to support architectures
+	   which support displaced stepping but not forks.  */
+	if (ecs->ws.kind == TARGET_WAITKIND_FORKED
+	    && gdbarch_supports_displaced_stepping (gdbarch))
 	  gdbarch_displaced_step_restore_all_in_ptid
 	    (gdbarch, parent_inf, ecs->ws.value.related_pid);
 
@@ -7248,7 +7261,7 @@ process_event_stop_test (struct execution_control_state *ecs)
   bool refresh_step_info = true;
   if ((ecs->event_thread->suspend.stop_pc == stop_pc_sal.pc)
       && (ecs->event_thread->current_line != stop_pc_sal.line
- 	  || ecs->event_thread->current_symtab != stop_pc_sal.symtab))
+	  || ecs->event_thread->current_symtab != stop_pc_sal.symtab))
     {
       /* We are at a different line.  */
 
@@ -9501,10 +9514,11 @@ _initialize_infrun ()
     = create_async_event_handler (infrun_async_inferior_event_handler, NULL,
 				  "infrun");
 
-  add_info ("signals", info_signals_command, _("\
+  cmd_list_element *info_signals_cmd
+    = add_info ("signals", info_signals_command, _("\
 What debugger does when program gets various signals.\n\
 Specify a signal as argument to print info on that signal only."));
-  add_info_alias ("handle", "signals", 0);
+  add_info_alias ("handle", info_signals_cmd, 0);
 
   c = add_com ("handle", class_run, handle_command, _("\
 Specify how to handle signals.\n\

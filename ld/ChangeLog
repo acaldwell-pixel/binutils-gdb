@@ -1,3 +1,49 @@
+2021-06-09  Nick Clifton  <nickc@redhat.com>
+
+	PR 27666
+	* testsuite/ld-sparc/sparc.exp: Do not run the sparctests or
+	sparc64tests for Solaris2 targets.
+
+2021-06-03  Alan Modra  <amodra@gmail.com>
+
+	PR 2589
+	* ld.texi (link-time runtime library search path): Mention
+	plugin library path.  Correct order of search.
+
+2021-05-31  Nelson Chu  <nelson.chu@sifive.com>
+	    Lifang Xia  <lifang_xia@c-sky.com>
+
+	PR 27566
+	* emultempl/riscvelf.em (after_allocation): Call
+	riscv_set_data_segment_info to set data segment phase before relaxing.
+	* testsuite/ld-riscv-elf/ld-riscv-elf.exp: Updated.
+	* testsuite/ld-riscv-elf/relro-relax-lui.d: New testcase.
+	* testsuite/ld-riscv-elf/relro-relax-lui.s: Likewise.
+	* testsuite/ld-riscv-elf/relro-relax-pcrel.d: Likewise.
+	* testsuite/ld-riscv-elf/relro-relax-pcrel.s: Likewise.
+
+2021-05-28  H.J. Lu  <hongjiu.lu@intel.com>
+
+	PR ld/27905
+	* testsuite/ld-i386/pcrel16-2.d: xfail.
+	* testsuite/ld-x86-64/pcrel16-2.d: Likewise.
+
+2021-05-26  H.J. Lu  <hongjiu.lu@intel.com>
+
+	PR ld/27905
+	* testsuite/ld-i386/code16.d: New file.
+	* testsuite/ld-i386/code16.t: Likewise.
+	* testsuite/ld-x86-64/code16.d: Likewise.
+	* testsuite/ld-x86-64/code16.t: Likewise.
+	* testsuite/ld-i386/i386.exp: Run code16.
+	* testsuite/ld-x86-64/x86-64.exp: Likewise.
+
+2021-05-26  H.J. Lu  <hongjiu.lu@intel.com>
+
+	* testsuite/ld-x86-64/ilp32-12.d: New file.
+	* testsuite/ld-x86-64/ilp32-12.s: Likewise.
+	* testsuite/ld-x86-64/x86-64.exp: Run ilp32-12.
+
 2021-05-14  Nelson Chu  <nelson.chu@sifive.com>
 
 	* testsuite/ld-riscv-elf/ld-riscv-elf.exp: Updated.

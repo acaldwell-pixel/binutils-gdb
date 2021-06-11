@@ -1,3 +1,231 @@
+2021-06-10  Tom de Vries  <tdevries@suse.de>
+
+	* gdb.mi/user-selected-context-sync.c (child_sub_function, main):
+	Rewrite while (1) using dummy loop body.
+
+2021-06-10  Bhuvanendra Kumar N  <Bhuvanendra.KumarN@amd.com>
+
+	* gdb.base/foll-exec.c: convert the multi-line function call into
+	single line.
+
+2021-06-10  Tom de Vries  <tdevries@suse.de>
+
+	* lib/cp-support.exp (cp_test_ptype_class): Break up regexp.
+	* gdb.cp/nested-types.exp: Remove usage of read1 timeout factor.
+
+2021-06-10  Tom de Vries  <tdevries@suse.de>
+
+	* gdb.cp/cplusfuncs.exp (info_func_regexp): Use gdb_test_lines.
+
+2021-06-09  Tom Tromey  <tromey@adacore.com>
+
+	* README (Example): Update read1 example.
+
+2021-06-09  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* lib/tuiterm.exp (Term) <_check_box>: Improve logging.
+
+2021-06-08  Lancelot Six  <lsix@lancelotsix.com>
+
+	* gdb.base/premature-dummy-frame-removal.py (TestUnwinder): Use
+	'is None' instead of '== None' and 'is not None' instead of
+	'!= None'.
+	* gdb.python/py-frame-args.py (lookup_function): Same.
+	* gdb.python/py-framefilter-invalidarg.py (Reverse_Function): Same.
+	* gdb.python/py-framefilter.py (Reverse_Function): Same.
+	* gdb.python/py-nested-maps.py (lookup_function): Same.
+	* gdb.python/py-objfile-script-gdb.py (lookup_function): Same.
+	* gdb.python/py-prettyprint.py (lookup_function): Same.
+	* gdb.python/py-section-script.py (lookup_function): Same.
+	* gdb.python/py-unwind-inline.py (dummy_unwinder): Same.
+	* gdb.python/python.exp: Same.
+	* gdb.rust/pp.py (lookup_function): Same.
+
+2021-06-08  Tom de Vries  <tdevries@suse.de>
+
+	* lib/gdb.exp (multi_line): Require more than one argument.
+	* gdb.base/gdbinit-history.exp: Update multi_line call.
+	* gdb.base/jit-reader.exp: Remove multi_line call.
+	* gdb.fortran/dynamic-ptype-whatis.exp: Same.
+
+2021-06-08  Tom de Vries  <tdevries@suse.de>
+
+	* gdb.base/info-types.exp.tcl (match_line, gdb_test_lines): Move ...
+	* lib/gdb.exp: ... here.
+	* gdb.base/info-macros.exp: Use gdb_test_lines.
+
+2021-06-08  Tom de Vries  <tdevries@suse.de>
+
+	* gdb.base/info-types.exp.tcl (match_line): Handle --any.
+	(gdb_test_lines): Factor out of ...
+	(run_test): ... here.
+
+2021-06-08  Tom de Vries  <tdevries@suse.de>
+
+	* gdb.base/batch-preserve-term-settings.exp (spawn_shell): Fix
+	matching of initial prompt.
+
+2021-06-08  Tom de Vries  <tdevries@suse.de>
+
+	* gdb.threads/multi-create-ns-info-thr.exp: Limit breakpoint regexp to
+	one line.
+
+2021-06-08  Tom de Vries  <tdevries@suse.de>
+
+	* gdb.base/sect-cmd.exp: Use gdb_test.  Use -wrap "".  Fix
+	test name.
+
+2021-06-08  Tom de Vries  <tdevries@suse.de>
+
+	* gdb.base/sect-cmd.exp: Fix saw_section_address_line regexp.
+
+2021-06-07  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* gdb.base/continue-all-already-running.exp: Call fail if can't
+	run to main.
+
+2021-06-07  Andrew Burgess  <andrew.burgess@embecosm.com>
+
+	PR gdb/27847
+	* gdb.dwarf2/dw2-weird-type-len.c: New file.
+	* gdb.dwarf2/dw2-weird-type-len.exp: New file.
+
+2021-06-07  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* gdb.base/attach.exp (test_command_line_attach_run): Use
+	proc_with_prefix.
+
+2021-06-07  Tom de Vries  <tdevries@suse.de>
+
+	PR testsuite/27908
+	* gdb.base/run-attach-while-running.exp (test): Don't match prompt
+	after attach using '$gdb_prompt $'.
+
+2021-06-07  Tom de Vries  <tdevries@suse.de>
+
+	* gdb.base/info-types.exp.tcl: Remove "File .*" matching from regexp
+	matching state machine.
+
+2021-06-07  Tom de Vries  <tdevries@suse.de>
+
+	* gdb.base/new-ui-pending-input.exp
+	(test_command_line_new_ui_pending_input): Fix regexp for "initial
+	prompt on extra console".
+
+2021-06-07  Tom de Vries  <tdevries@suse.de>
+
+	* gdb.base/info-types.exp.tcl (run_test): Move "random line" regexp
+	up.
+
+2021-06-06  Simon Marchi  <simon.marchi@efficios.com>
+
+	* gdb.server/stop-reply-no-thread-multi.exp: Clear sysroot when
+	host and target are local.
+
+2021-06-05  Hannes Domani  <ssbssa@yahoo.de>
+
+	* gdb.python/py-symbol.exp: Fix tests for Python 3.
+
+2021-06-05  Shahab Vahedi  <shahab@synopsys.com>
+
+	* gdb.arch/arc-disassembler-options.exp: New test.
+	* gdb.arch/arc-disassembler-options.s: New test source.
+
+2021-06-04  Tom Tromey  <tromey@adacore.com>
+
+	* gdb.ada/array_of_symbolic_length.exp: New file.
+	* gdb.ada/array_of_symbolic_length/foo.adb: New file.
+	* gdb.ada/array_of_symbolic_length/gl.adb: New file.
+	* gdb.ada/array_of_symbolic_length/gl.ads: New file.
+	* gdb.ada/array_of_symbolic_length/pck.adb: New file.
+	* gdb.ada/array_of_symbolic_length/pck.ads: New file.
+
+2021-06-03  Magne Hov  <mhov@undo.io>
+
+	PR python/27841
+	* gdb.python/py-events.exp: Extend inferior exit tests.
+	* gdb.python/py-events.py: Print inferior exit PID.
+
+2021-06-03  Hannes Domani  <ssbssa@yahoo.de>
+
+	* gdb.python/py-symbol.exp: Test symbol constants.
+
+2021-06-02  Bernd Edlinger  <bernd.edlinger@hotmail.de>
+
+	* gdb.dwarf2/per-bfd-sharing.exp: Fix temp-dir leakage.
+
+2021-06-02  Carl Love  <cel@us.ibm.com>
+
+	* gdb.threads/threadapply.c: Add global mybarrier.
+	(main): Add pthread_barrier_init.
+	(thread_function): Replace while loop with myp increment and
+	pthread_barrier_wait.
+
+2021-06-02  Andrew Burgess  <andrew.burgess@embecosm.com>
+
+	* lib/gdb.exp (gdb_compile): Only add the -J option when using a
+	gcc based Fortran compiler, for example, flang does not support
+	this option.
+
+2021-06-02  Andrew Burgess  <andrew.burgess@embecosm.com>
+
+	* lib/fortran.exp (fortran_int8): Escape '*' in pattern.
+
+2021-06-01  Tom Tromey  <tromey@adacore.com>
+
+	* Makefile.in (all): Don't print anything.
+	($(abs_builddir)/site.exp site.exp): Use $(ECHO_GEN).
+	(expect-read1): Likewise.
+	(read1.so): Use $(ECHO_CC).
+	Include silent-rules.mk.
+
+2021-06-01  Tom Tromey  <tromey@adacore.com>
+
+	* aclocal.m4, configure.ac, configure: Remove.
+	* Makefile.in (EXTRA_RULES): Remove.
+	($(abs_builddir)/site.exp site.exp): Don't depend on
+	config.status.
+	(distclean maintainer-clean realclean, Makefile): Update.
+	(config.status): Remove target.
+	(lib/pdtrace): New target.
+	(all): Don't depend on EXTRA_RULES.
+	(check-read1): Depend on read1.so, expect-read1.
+
+2021-06-01  Tom de Vries  <tdevries@suse.de>
+
+	PR symtab/26096
+	* gdb.cp/cold-clone.cc: New test.
+	* gdb.cp/cold-clone.exp: New file.
+
+2021-06-01  Andrew Burgess  <andrew.burgess@embecosm.com>
+
+	* gdb.gdb/unittest.c: New file.
+	* gdb.gdb/unittest.exp: Run with and without a binary file loaded
+	into GDB.
+
+2021-06-01  Andrew Burgess  <andrew.burgess@embecosm.com>
+
+	* gdb.base/premature-dummy-frame-removal.c: New file.
+	* gdb.base/premature-dummy-frame-removal.exp: New file.
+	* gdb.base/premature-dummy-frame-removal.py: New file.
+
+2021-05-27  Simon Marchi  <simon.marchi@polymtl.ca>
+
+	* gdb.base/reverse-init-functions.exp: New.
+
+2021-05-27  Tom de Vries  <tdevries@suse.de>
+
+	PR symtab/27919
+	PR testsuite/27920
+	* gdb.dwarf2/dw2-dummy-cu.exp: Use maint expand-symtabs instead of
+	-readnow.
+
+2021-05-27  Tom de Vries  <tdevries@suse.de>
+
+	PR testsuite/27921
+	* gdb.dwarf2/gdb-index.exp (add_gdb_index): Rename to ...
+	(local_add_gdb_index): ... this.
+
 2021-05-21  Tom de Vries  <tdevries@suse.de>
 
 	PR testsuite/25047

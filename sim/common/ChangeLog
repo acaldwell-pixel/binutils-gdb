@@ -1,3 +1,47 @@
+2021-06-09  Mike Frysinger  <vapier@gentoo.org>
+
+	* sim-basics.h (NULL): Delete.
+
+2021-06-09  Mike Frysinger  <vapier@gentoo.org>
+
+	* nrun.c (main): Set default_callback.target_endian to
+	current_target_byte_order when it's BFD_ENDIAN_UNKNOWN.
+
+2021-06-09  Mike Frysinger  <vapier@gentoo.org>
+
+	* cgen-defs.h (STATE_RUN_FAST_P, CGEN_STATE, cgen_init): Delete.
+	* cgen-run.c (cgen_get_fast_p): New function.
+	(sim_resume): Move fast_p up and call cgen_get_fast_p.
+	* cgen-utils.c (cgen_init): Delete.
+	* sim-base.h: Delete cgen-sim.h include.
+	(struct sim_state): Delete cgen_state and STATE_CGEN_STATE.
+
+2021-06-08  Mike Frysinger  <vapier@gentoo.org>
+
+	* Make-common.in (IGEN_RUN): New variable.
+	(IGEN): Remove ASAN_OPTIONS.
+
+2021-06-05  Mike Frysinger  <vapier@gentoo.org>
+
+	* Make-common.in (COMMON_OBJS): Define.
+	(LIB_OBJS): Replace version.o with $(COMMON_OBJS).
+	(version.c): Delete target.
+	(generated_files): Delete version.c.
+	* local.mk: New file.
+
+2021-05-29  Mike Frysinger  <vapier@gentoo.org>
+
+	* Make-common.in (EXTRA_LIBS): Add $(LIBGNU_EXTRA_LIBS).
+
+2021-05-29  Mike Frysinger  <vapier@gentoo.org>
+
+	* Make-common.in (GNULIB_BUILDDIR): Define.
+	Include $(GNULIB_BUILDDIR)/Makefile.gnulib.inc.
+	(CSEARCH): Add -I../...
+	(ALL_CFLAGS): Add $(INCGNU).
+	(EXTRA_LIBS): Add $(LIBGNU).
+	* defs.h: Include gnulib/config.h.  Undefine PACKAGE* defines.
+
 2021-05-17  Mike Frysinger  <vapier@gentoo.org>
 
 	* sim-base.h (SIM_HAVE_COMMON_SIM_STATE): Delete.

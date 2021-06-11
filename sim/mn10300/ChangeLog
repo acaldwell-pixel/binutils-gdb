@@ -1,3 +1,16 @@
+2021-06-09  Mike Frysinger  <vapier@gentoo.org>
+
+	* sim-main.h (SIM_ENGINE_HALT_HOOK): Delete 0.
+
+2021-06-08  Mike Frysinger  <vapier@gentoo.org>
+
+	* Makefile.in: Replace $(IGEN) with $(IGEN_RUN) and ../igen/igen
+	with $(IGEN).
+
+2021-05-29  Mike Frysinger  <vapier@gentoo.org>
+
+	* interp.c [!SIGTRAP] (SIGTRAP): Define to 5.
+
 2021-05-17  Mike Frysinger  <vapier@gentoo.org>
 
 	* sim-main.h (SIM_HAVE_COMMON_SIM_STATE): Delete.
